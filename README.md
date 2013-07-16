@@ -1,6 +1,6 @@
 # Symfony Multiple Applications Support
 
-複数アプリケーションを運用する Symfony2 Standard Edition プロジェクト（[詳しくはこちら](#Symfony Standard Edition で複数アプリケーションを運用する)）のコマンド実行を補助します。  
+複数アプリケーションを運用する Symfony2 Standard Edition プロジェクト（[詳しくはこちら](#symfony-standard-edition-%E3%81%A7%E8%A4%87%E6%95%B0%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E9%81%8B%E7%94%A8%E3%81%99%E3%82%8B)）のコマンド実行を補助します。  
 例えば`cache:clear`等のコマンドを、すべてのアプリケーション上で順次実行する事ができます。
 
 ## 使い方
@@ -36,7 +36,7 @@ $ bin/console assets:install --symlink
 > Installing assets for Symfony\Bundle\FrameworkBundle into web/api/bundles/framework
 ```
 
-第1引数（デフォルト：**web**）に`/%kernel.name%`が付与されます。オプションは共通の物が使用されます。  
+第1引数（デフォルト：web）に`/%kernel.name%`が付与されます。オプションは共通の物が使用されます。  
 ※`-watch`,`--force`,`--perod`オプションは使用できません。
 
 ## assetic:dump
@@ -57,21 +57,21 @@ $ bin/console assetic:install --env=prod --no-debug web
 > xx:xx:xx [file+] $(PROJECT_ROOT)/apps/api/../../web/api/js/xxxxxx.js
 ```
 
-第1引数（デフォルト：**%assetic.write_to%**）が指定された場合のみ、`/%kernel.name%`が付与されます。オプションは共通の物が使用されます。
+第1引数（デフォルト：%assetic.write_to%）が指定された場合のみ、`/%kernel.name%`が付与されます。オプションは共通の物が使用されます。
 
 ## Symfony Standard Edition で複数アプリケーションを運用する
 ```
 PROJECT ROOT
 |   
-+---apps
-|   |   autoload.php
-|   |   bootstrap.php.cache
++---apps <------------------------ ここに複数のアプリケーションを格納。
+|   |   autoload.php               autoload.php, bootstrap.php.cache 等の共有ファイルはルートに配置。
+|   |   bootstrap.php.cache 
 |   |   ...
 |   |   
-|   +---frontend
-|   |   |   FrontendCache.php
-|   |   |   FrontendKernel.php
-|   |   |   console
+|   +---frontend <---------------- アプリケーションルート。ディレクトリ名＝アプリケーション名となる。
+|   |   |   FrontendCache.php  <-- アプリケーションキャッシュ。
+|   |   |   FrontendKernel.php <-- アプリケーションカーネル。クラス名は `Kernel` で終わる必要がある。
+|   |   |   console <------------- アプリケーションコンソール
 |   |   |   ...
 |   |   |   
 |   |   +---cache
@@ -85,7 +85,7 @@ PROJECT ROOT
 |   |       console
 |   |       ...
 |   |               
-|   \---config
+|   \---config <------------------ プロジェクト共有のコンフィギュレーション。アプリケーションでimportして使う。
 |           config.yml
 |           parameters.yml
 |           ...
@@ -93,7 +93,7 @@ PROJECT ROOT
 +---bin     
 +---src                
 \---web
-    +---frontend
+    +---frontend <---------------- アプリケーション公開ディレクトリ。ディレクトリ名はアプリケーションと同様。
     |       .htaccess
     |       app.php
     |       app_dev.php
@@ -103,7 +103,7 @@ PROJECT ROOT
             ...
 ```
 
-複数のアプリケーション（例ではfrontend, api）のカーネル、コンフィギュレーション、キャッシュ等を固有のアプリケーション名を付けたディレクトリに入れ、`apps`内で管理します。※カーネルのクラス名は `Kernel`で終わる必要があります。  
+複数のアプリケーション（例ではfrontend, api）のカーネル、コンフィギュレーション、キャッシュ等を固有のアプリケーション名を付けたディレクトリに入れ、`apps`内で管理します。  
 `web`ディレクトリにもアプリケーション毎に、対応するアプリケーションのディレクトリ名でネストして下さい。
 
 ※このアーキテクチャの詳細は以下をご参照下さい。  
