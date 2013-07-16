@@ -1,0 +1,21 @@
+{
+    "name": "issei/multiple-apps-support",
+    "type": "library",
+    "keywords": ["symfony", "multiple apps"],
+    "license": "MIT",
+    "authors": [
+        {"name": "Issei.M", "email": "issei.m7@gmail.com"}
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/console": "2.*",
+        "symfony/http-kernel": "2.*",
+        "symfony/finder": "2.*",
+        "symfony/framework-bundle": "2.*"
+    },
+    "autoload": {
+        "psr-0": { "Issei\\MultipleAppsSupport\\": "lib/" }
+    },
+    "bin": ["bin/deploy"]
+}
